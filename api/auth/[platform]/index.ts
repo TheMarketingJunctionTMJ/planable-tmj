@@ -66,7 +66,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
 
     // Set cookie with OAuth state (HttpOnly, Secure, SameSite=Lax for OAuth redirect)
-    res.setHeader('Set-Cookie', `oauth_state=${encodedState}; Path=/; HttpOnly; SameSite=Lax; Max-Age=600`);
+    res.setHeader('Set-Cookie', `oauth_state=${encodedState}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=600`);
 
     // Redirect to OAuth provider
     res.redirect(authUrl);

@@ -11,10 +11,11 @@ interface LinkedInConfig {
 }
 
 function getConfig(): LinkedInConfig {
+  const appUrl = (process.env.NEXT_PUBLIC_APP_URL || '').replace(/\/$/, ''); // Remove trailing slash
   return {
     clientId: process.env.LINKEDIN_CLIENT_ID!,
     clientSecret: process.env.LINKEDIN_CLIENT_SECRET!,
-    redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/linkedin/callback`,
+    redirectUri: `${appUrl}/api/auth/linkedin/callback`,
   };
 }
 

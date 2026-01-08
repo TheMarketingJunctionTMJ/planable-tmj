@@ -37,7 +37,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   if (typeof code !== 'string' || typeof state !== 'string' || typeof platform !== 'string') {
-    return res.status(400).json({ error: 'Missing required parameters' });
+    return res.status(400).json({
+      error: 'Missing required parameters',
+      received: { code: typeof code, state: typeof state, platform: typeof platform },
+      query: req.query
+    });
   }
 
   // Get OAuth state from cookie
@@ -57,7 +61,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { userId, codeVerifier } = storedState;
 
   // Clear the OAuth state cookie
-  res.setHeader('Set-Cookie', 'oauth_state=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0');
+  res.setHeader('Set-Cookie', 'oauth_state=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0');
 
   try {
     let accessToken: string;
